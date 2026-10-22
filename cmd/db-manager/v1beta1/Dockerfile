@@ -1,5 +1,5 @@
 # Build the Katib DB manager.
-FROM golang:alpine AS build-env
+FROM --platform=$BUILDPLATFORM golang:alpine AS build-env
 
 ARG TARGETARCH
 

@@ -1,5 +1,5 @@
 # --- Clone the kubeflow/kubeflow code ---
-FROM alpine/git AS fetch-kubeflow-kubeflow
+FROM --platform=$BUILDPLATFORM alpine/git AS fetch-kubeflow-kubeflow
 
 WORKDIR /kf
 COPY ./pkg/ui/v1beta1/frontend/COMMIT ./
@@ -9,7 +9,7 @@ RUN git clone https://github.com/kubeflow/kubeflow.git && \
     git checkout $COMMIT
 
 # --- Build the frontend kubeflow library ---
-FROM node:16-alpine AS frontend-kubeflow-lib
+FROM --platform=$BUILDPLATFORM node:16-alpine AS frontend-kubeflow-lib
 
 WORKDIR /src
 
@@ -28,7 +28,7 @@ COPY --from=fetch-kubeflow-kubeflow $LIB/ ./
 RUN npm run build
 
 # --- Build the frontend ---
-FROM node:16-alpine AS frontend
+FROM --platform=$BUILDPLATFORM node:16-alpine AS frontend
 
 WORKDIR /src
 COPY ./pkg/ui/v1beta1/frontend/package*.json ./
@@ -47,7 +47,7 @@ COPY --from=frontend-kubeflow-lib /src/dist/kubeflow/ ./node_modules/kubeflow/
 RUN npm run build:prod
 
 # --- Build the backend ---
-FROM golang:alpine AS go-build
+FROM --platform=$BUILDPLATFORM golang:alpine AS go-build
 
 ARG TARGETARCH
 
