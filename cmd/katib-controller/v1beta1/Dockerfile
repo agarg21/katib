@@ -1,5 +1,5 @@
 # Build the Katib controller.
-FROM golang:alpine AS build-env
+FROM --platform=$BUILDPLATFORM golang:alpine AS build-env
 
 ARG TARGETARCH
 

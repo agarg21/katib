@@ -1,5 +1,5 @@
 # Build the Katib file metrics collector.
-FROM golang:alpine AS build-env
+FROM --platform=$BUILDPLATFORM golang:alpine AS build-env
 
 ARG TARGETARCH
 
