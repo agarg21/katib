@@ -1,8 +1,7 @@
 name: Publish Katib Core Images
 
 on:
-  - push
-  - pull_request
+  - pull_request  # fork-only harness: PR runs only (measurement)
 
 jobs:
   core:
